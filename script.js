@@ -1,7 +1,8 @@
 const input = document.getElementById("input");
 const list = document.getElementById("items");
+const storageKey = "list";
 
-let tasks = [];
+let tasks = ["task1"];
 
 function addTask(){
     const value = input.value.trim();
@@ -12,11 +13,13 @@ function addTask(){
     input.value = "";
     tasks.push(value);
     renderTask();
+    saveList();
 }
 
 function removeTask(idx){
     tasks.splice(idx, 1);
     renderTask(); 
+    saveList();
 }
 
 function renderTask(){
@@ -41,4 +44,15 @@ function renderTask(){
     }
 }
 
-document.addEventListener("DOMContentLoaded", renderTask);
+function loadList(){
+    const stringList = localStorage.getItem(storageKey);
+    if(stringList) tasks = JSON.parse(stringList);
+    renderTask();
+}
+
+function saveList(){
+    const stringList = JSON.stringify(tasks);
+    localStorage.setItem(storageKey, stringList);
+}
+
+document.addEventListener("DOMContentLoaded", loadList);
