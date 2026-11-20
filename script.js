@@ -2,7 +2,7 @@ const input = document.getElementById("input");
 const list = document.getElementById("items");
 const storageKey = "list";
 
-let tasks = ["task1"];
+let tasks = [];
 
 function addTask(){
     const value = input.value.trim();
@@ -56,3 +56,7 @@ function saveList(){
 }
 
 document.addEventListener("DOMContentLoaded", loadList);
+
+document.addEventListener("keydown", () => {
+    if(event.key == "Enter") addTask();
+});
